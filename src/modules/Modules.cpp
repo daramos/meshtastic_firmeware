@@ -86,12 +86,18 @@
 #include "modules/DropzoneModule.h"
 #endif
 
+#include "modules/VersionFingerprintModule.h"
+
 /**
  * Create module instances here.  If you are adding a new module, you must 'new' it here (or somewhere else)
  */
 void setupModules()
 {
     if (config.device.role != meshtastic_Config_DeviceConfig_Role_REPEATER) {
+
+        // Fingerprinter should be first so it sees all packets.
+        versionFingerprintModule = new VersionFingerprintModule();
+
 #if (HAS_BUTTON || ARCH_PORTDUINO) && !MESHTASTIC_EXCLUDE_INPUTBROKER
         inputBroker = new InputBroker();
 #endif
